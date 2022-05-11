@@ -15,16 +15,34 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'jparise/vim-graphql'
 Plug 'sainnhe/sonokai'
 Plug 'sheerun/vim-polyglot'
-
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 let mapleader=" "
 nmap <Leader><Leader>s <Plug>(easymotion-s2)
 
-let g:python3_host_prog = '/Library/Frameworks/Python.framework/Versions/3.10/bin/python3.10'
+let g:python3_host_prog = 'C:\Python310\python.exe' 
+"Abbreviations
 
-autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
-autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+cnoreabbrev W! w!
+cnoreabbrev Q! q!
+cnoreabbrev Qall! qall!
+cnoreabbrev Wq wq
+cnoreabbrev Wa wa
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qall qall
+
+"Go-Vim Config{
+let g:go_term_enabled = 1
+let g:go_term_reuse = 1
+nmap <Leader><Leader>go :wa<cr><Plug>(go-run)
+"}
+
+autocmd BufEnter *.{js,jsx,ts,tsx,go} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx,go} :syntax sync clear
 
 " Give more space for displaying messages.
 set cmdheight=2
@@ -84,7 +102,7 @@ nmap <silent> gr <Plug>(coc-references)
 
 " COC extensions
 
-let g:coc_global_extensions=[ 'coc-css', 'coc-cssmodules', 'coc-emmet', 'coc-eslint', 'coc-fzf-preview', 'coc-git', 'coc-html', 'coc-json', 'coc-lightbulb', 'coc-prettier', 'coc-snippets', 'coc-stylelintplus', 'coc-svg', 'coc-tsserver', 'coc-yank']
+let g:coc_global_extensions=[ 'coc-css', 'coc-cssmodules', 'coc-emmet', 'coc-eslint', 'coc-fzf-preview', 'coc-git', 'coc-html', 'coc-json', 'coc-lightbulb', 'coc-prettier', 'coc-snippets', 'coc-stylelintplus', 'coc-svg', 'coc-tsserver', 'coc-yank','coc-go']
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -253,11 +271,12 @@ endif
 let g:sonokai_style = 'default'
 let g:sonoskai_better_performance = 1
 let g:sonokai_enable_italic = 1
-let g:sonokai_cursor = 'yellow'
+let g:sonokai_cursor = 'purple'
 let g:sonokai_diagnostic_text_highlight = 1
 let g:sonokai_diagnostic_line_highlight = 1
 let g:sonokai_diagnostic_virtual_text = 'colored'
 let g:airline_theme = 'sonokai'
+let g:sonokai_transparent_background = 1
 colorscheme sonokai
 "}}} Colors
 " Spaces & Tabs {{{
@@ -278,12 +297,18 @@ set hidden
 set relativenumber           " show line number
 set number
 set showcmd                  " show command in bottom bar
-set cursorline               " highlight current line
 set wildmenu                 " visual autocomplete for command menu
 set showmatch                " highlight matching brace
 set laststatus=2             " window will always have a status line
 set nobackup
 set noswapfile
+hi clear CursorLine
+hi CursorLine gui=underline cterm=underline
+augroup CursorLine
+   au!
+   au BufEnter * setlocal cursorline
+   au BufLeave * setlocal nocursorline
+augroup END
 " }}} UI Config
 
 " Search {{{
