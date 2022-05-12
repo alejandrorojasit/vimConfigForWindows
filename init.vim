@@ -1,3 +1,4 @@
+set nocompatible
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-airline/vim-airline'
@@ -16,14 +17,30 @@ Plug 'jparise/vim-graphql'
 Plug 'sainnhe/sonokai'
 Plug 'sheerun/vim-polyglot'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-call plug#end()
+Plug 'godlygeek/tabular'
 
+call plug#end()
+"Map Leader key set
 let mapleader=" "
+
+"Easey Motion Leader call
 nmap <Leader><Leader>s <Plug>(easymotion-s2)
 
-let g:python3_host_prog = 'C:\Python310\python.exe' 
-"Abbreviations
+"Tabulator Leader call
+if exists(":Tabularize")
+   nmap <Leader>t= :Tabularize /=<CR>
+   vmap <Leader>t= :Tabularize /=<CR>
+   nmap <Leader>t: :Tabularize /:\zs<CR>
+   vmap <Leader>t: :Tabularize /:\zs<CR>
+   nmap <Leader>t| :Tabularize /|<CR> 
+   vmap <Leader>t| :Tabularize /|<CR> 
+endif
+"Tabularize autorun
 
+"Python host 
+let g:python3_host_prog = 'C:\Python310\python.exe' 
+
+"Abbreviations
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
 cnoreabbrev Qall! qall!
@@ -35,11 +52,10 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 
-"Go-Vim Config{
+"Go-Vim Config
 let g:go_term_enabled = 1
 let g:go_term_reuse = 1
 nmap <Leader><Leader>go :wa<cr><Plug>(go-run)
-"}
 
 autocmd BufEnter *.{js,jsx,ts,tsx,go} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx,go} :syntax sync clear
