@@ -1,6 +1,7 @@
 call plug#begin(stdpath('data') . '/plugged')
 
    Plug 'nvim-treesitter/nvim-treesitter' , {'do': ':TSUpdate'} 
+   Plug 'p00f/nvim-ts-rainbow'  
    Plug 'neoclide/coc.nvim', {'branch' : 'release'}
    Plug 'sainnhe/sonokai'
    Plug 'vim-airline/vim-airline'
@@ -8,7 +9,6 @@ call plug#begin(stdpath('data') . '/plugged')
    Plug 'airblade/vim-gitgutter'
    Plug 'scrooloose/nerdtree'
    Plug 'jiangmiao/auto-pairs'
-   Plug 'frazrepo/vim-rainbow'
    Plug 'yggdroot/indentline'
    Plug 'easymotion/vim-easymotion'
    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }   
@@ -47,10 +47,23 @@ colorscheme sonokai
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
+
+   ensure_installed = {"bash","comment","css","go","graphql","html","http","java","javascript","json","json5","lua","scheme","tsx","typescript","vim"},
+
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
   },
+
+  indent = {
+     enable = true
+     },
+
+  rainbow = {
+     enable = true,
+     extended_mode = true,
+     max_file_line = nil,
+     }
 }
 EOF
 "}
@@ -268,13 +281,14 @@ set cmdheight=2
 set updatetime=300
 set shortmess+=c
 set nocompatible     
-set tabstop =3         " number of ivusla spaces per TAB
-set softtabstop =3     " number of spaces in tab when editing
-set shiftwidth =3      " number of spaces to use for autoindent
+set tabstop=3          "number of ivusla spaces per TAB
+set softtabstop=3      " number of spaces in tab when editing
+set shiftwidth=3       "number of spaces to use for autoindent
 set expandtab          " tab are space
 set autoindent         " enable autoindent
+set smartindent
 set copyindent         " copy indent from the previous line
-set clipboard =unnamed " Enable clipboard paste
+set clipboard=unnamed  " Enable clipboard paste
 set ignorecase         " Ignosre case when searching
 set smartcase          " Ignose case if search pattern is lower case
 set hlsearch           " Highlight matche
